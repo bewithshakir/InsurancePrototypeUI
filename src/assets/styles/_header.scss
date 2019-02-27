@@ -1,0 +1,60 @@
+.top-header {
+  min-height: 85px;
+  .searchBox {
+    border-radius: 30px;
+    width: 250px;
+    height: auto;
+  }
+  .user-name {
+    line-height: 1;
+    p {
+      margin: 0;
+      font-size: 15px;
+    }
+    span {
+      font-size: 13px;
+      color: #b5b5b5;
+      float: right;
+    }
+  }
+  .far {
+    font-size: 24px;
+    position: relative;
+  }
+  .badge {
+    position: absolute;
+    background: #117e96;
+    border: 1px solid black;
+    border-radius: 100%;
+    top: -7px;
+    min-width: 14px;
+    text-align: center;
+    font-size: 10px;
+    line-height: 7px;
+    color: #fff;
+    right: -6px;
+    min-height: 14px;
+  }
+  .dropdown-toggle {
+    &::after {
+      content: none;
+    }
+  }
+  .image-dropdown-menu {
+    top: 12px !important;
+    left: -100px !important;
+  }
+
+  @media (max-width: 768px) {
+    .image-dropdown-menu {
+      top: 12px !important;
+      left: -24px !important;
+      border-radius: 10px;
+    }
+  }
+  @media (max-width: 768px) {
+    .searchBox {
+      width: 100%;
+    }
+  }
+}

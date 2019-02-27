@@ -1,0 +1,59 @@
+{
+  "name": "React_Video_Map",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@babel/polyfill": "^7.2.5",
+    "@types/googlemaps": "^3.30.16",
+    "@types/markerclustererplus": "^2.1.33",
+    "@types/react": "^16.8.1",
+    "axios": "^0.18.0",
+    "bootstrap": "^4.2.1",
+    "chart.js": "^2.7.3",
+    "classnames": "^2.2.6",
+    "google-maps-react": "^2.0.2",
+    "hls.js": "^0.12.2",
+    "lodash": "^4.17.11",
+    "node-sass": "^4.11.0",
+    "perfect-scrollbar": "^1.4.0",
+    "popper.js": "^1.14.6",
+    "react": "^16.8.1",
+    "react-beautiful-dnd": "^10.0.4",
+    "react-bootstrap": "^0.32.4",
+    "react-chartjs-2": "^2.7.4",
+    "react-dom": "^16.8.1",
+    "react-easy-spinner": "^1.0.2",
+    "react-google-maps": "^9.4.5",
+    "react-html-table-to-excel": "^2.0.0",
+    "react-input-range": "^1.3.0",
+    "react-reactive-form": "^1.0.28",
+    "react-redux": "^6.0.0",
+    "react-responsive-modal": "^3.6.0",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.1.3",
+    "react-spinners": "^0.5.1",
+    "react-table": "^6.8.6",
+    "react-tooltip": "^3.9.2",
+    "recompose": "^0.30.0",
+    "redux": "^4.0.1",
+    "redux-form": "^8.1.0",
+    "redux-thunk": "^2.3.0",
+    "video-react": "^0.13.2",
+    "video.js": "^7.4.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

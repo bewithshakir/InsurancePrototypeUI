@@ -1,0 +1,174 @@
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font: 16px/1.4 Helvetica;
+  background-color: #232838;
+}
+#root {
+  height: 100%;
+}
+.dropdown-menu {
+  .fa-caret-up {
+    position: absolute;
+    font-size: 33px;
+    top: -23px;
+    right: 19px;
+    color: #d9d9d9;
+  }
+}
+.dropdown-item {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-bottom: 1px solid $gray-400;
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.form_container {
+  background: #fff;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #cccccc !important;
+  border-radius: 14px;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.validation-info {
+  font-size: small;
+  color: #e03737;
+  margin-top: 2%;
+  margin-bottom: 0%;
+}
+
+// --- Video Cotrol bar ----
+.car-details {
+  .video-js {
+    .vjs-big-play-button {
+      display: none;
+    }
+    .vjs-control-bar {
+      display: flex !important;
+      visibility: visible;
+      opacity: 1;
+      transition: visibility 0.1s;
+      height: 111px;
+      bottom: -141px;
+      width: 964px;
+      left: -203px;
+      font-size: 23px;
+      align-items: center;
+      background: #333546;
+      border-radius: 5px;
+    }
+    .vjs-volume-panel {
+      display: none;
+    }
+    .vjs-time-control {
+      height: auto;
+      background: transparent;
+      border-radius: 30px;
+      line-height: 1;
+      font-size: 18px;
+      padding: 10px 15px;
+      border: 2px solid #494a5c;
+    }
+    .vjs-play-progress {
+      background-color: #c22e3c;
+    }
+    .vjs-slider {
+      background-color: #505163;
+    }
+    .vjs-menu-button {
+      display: none;
+    }
+  }
+  .vjs-has-started.vjs-user-inactive.vjs-playing .vjs-control-bar {
+    opacity: 1;
+  }
+  .sizing-medium {
+    .state-loading-metadata {
+      background: blue;
+      &::after {
+        content: "sssssssssssssssss";
+        position: absolute;
+        width: 100px;
+        height: 20px;
+        background: red;
+      }
+    }
+  }
+  .vjs-icon-replay:before,
+  .video-js .vjs-play-control.vjs-ended .vjs-icon-placeholder:before {
+    content: "\F101";
+  }
+  .vjs-icon-fullscreen-enter:before,
+  .video-js .vjs-fullscreen-control .vjs-icon-placeholder:before {
+    background-color: #4b4d5f;
+    font-size: 25px;
+    padding: 9px;
+    border-radius: 100%;
+    color: #fff;
+  }
+}
+
+.car-details .video-js .vjs-big-play-button .vjs-icon-placeholder:before,
+.car-details .vjs-button > .vjs-icon-placeholder:before,
+.car-details .video-js .vjs-modal-dialog,
+.car-details .vjs-modal-dialog .vjs-modal-dialog-content {
+  position: static;
+}
+
+.access-request-modal {
+  background-color: #3f465b;
+  border: none;
+  .access-request-modal-body {
+    // font-family: Roboto;
+    font-size: 17px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #ffffff;
+  }
+  .access-request-btn {
+    border-radius: 4px;
+    opacity: 0.9;
+    // font-family: Roboto;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: -0.5px;
+    color: #f2c419;
+    background-color: #3f465b;
+    border: 1px solid #f2c419;
+    width: 168px;
+    height: 33px;
+    cursor: pointer;
+  }
+  .btn-access {
+    background-color: #f2c419;
+    color: #000000;
+  }
+}
+
+.styles_modal__gNwvD {
+  background-color: #3f465b;
+  border-radius: 3px;
+  box-shadow: 0 46px 100px 0 rgba(12, 12, 12, 0.3);
+}
+.modal-footer {
+  border: none;
+}
+button[disabled] {
+  opacity: 0.3;
+  cursor: default;
+}

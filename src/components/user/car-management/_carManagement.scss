@@ -1,0 +1,100 @@
+.user-list {
+  color: #e6e4e4;
+  .car-list-header {
+    // font-family: Roboto;
+    font-size: 28px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #e6e4e4;
+    padding: 29px 0 28px;
+  }
+
+  .user-list-table-container {
+    border-radius: 6px;
+    box-shadow: 0 2px 54px 0 rgba(0, 0, 0, 0.31);
+    background-color: #242939;
+    // color: #b7b7b7;
+
+    .user-list-table-result {
+      color: #b7b7b7;
+      padding: 42px 0;
+    }
+
+    .user-list-table {
+      padding-bottom: 20px;
+      .rt-resizable-header {
+        background-color: #242939;
+      }
+      .rt-thead.-header {
+        border: none;
+      }
+      .rt-thead .rt-tr {
+        border-top: none;
+        border-bottom: 1px solid #eef3ff;
+      }
+      .rt-tr-group {
+        border: none;
+        border-bottom: 1px solid #eef3ff;
+        &:last-child {
+          border-bottom: none;
+        }
+        .status-round-active {
+          height: 5px;
+          width: 5px;
+          background-color: #7ed321;
+          border-radius: 50%;
+          display: inline-block;
+          margin-bottom: 3px;
+          margin-right: 6px;
+        }
+        .status-round-new {
+          height: 5px;
+          width: 5px;
+          background-color: #ff0000;
+          border-radius: 50%;
+          display: inline-block;
+          margin-bottom: 3px;
+          margin-right: 6px;
+        }
+        .status-round-pedding {
+          height: 5px;
+          width: 5px;
+          background-color: #d3cd21;
+          border-radius: 50%;
+          display: inline-block;
+          margin-bottom: 3px;
+          margin-right: 6px;
+        }
+        .acl-permission-raise {
+          background-color: #888888;
+          border: none;
+          border-radius: 4px;
+          color: #ffffff;
+          font-size: 15px;
+          padding: 4px 12px;
+        }
+      }
+
+      .rt-tbody .car-name {
+        color: #f2c419;
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
+
+.car-detail-header {
+  background: url("../../../assets/images/Trillium_proto_car_detail.png") top
+    center no-repeat;
+  height: 100px;
+}
+
+.issue-modal-content-acl {
+  padding: 1% 10%;
+  font-size: 20px;
+}

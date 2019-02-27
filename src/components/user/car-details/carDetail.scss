@@ -1,0 +1,354 @@
+@import "~video.js/src/css/video-js.scss";
+
+.car-details {
+  background: url("../../../assets/images/Trillium_proto.png") top center
+    no-repeat;
+  height: 1485px;
+  padding-top: 228px;
+
+  .car-image {
+    width: 408px;
+    position: relative;
+    .sensor {
+      background: #de0303;
+      width: 16px;
+      height: 16px;
+      display: block;
+      position: absolute;
+      border-radius: 100%;
+      text-align: center;
+      border: 2px solid #ff3b3b;
+      cursor: pointer;
+      transition: all 0.3s;
+      background-color: #ff0000;
+      border-color: rgba(253, 160, 160, 0.4);
+
+      &:hover {
+        background-color: #e6761b;
+        border-color: #ffa019;
+      }
+      &.active {
+        background-color: #e6761b;
+        border-color: #ffa019;
+        pointer-events: none;
+      }
+      &.pos-1 {
+        left: 33%;
+        top: 45px;
+      }
+      &.pos-2 {
+        left: 33.5%;
+        top: 61.5%;
+      }
+      &.pos-3 {
+        left: 21.5%;
+        top: 121px;
+      }
+      &.pos-4 {
+        left: 44.5%;
+        top: 120px;
+      }
+      &.pos-5 {
+        left: 41%;
+        top: 104px;
+      }
+      &.pos-5 {
+        left: 47%;
+        top: 118px;
+      }
+      &.pos-6 {
+        left: 45%;
+        bottom: 72px;
+      }
+    }
+  }
+
+  .video-map-aceess {
+    height: 1028px;
+    margin-top: -56px;
+    margin-left: -8px;
+    min-width: 101.5%;
+    background-color: black;
+    opacity: 1;
+    color: white;
+    padding: 22% 34%;
+    border-radius: 6px;
+    text-align: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #fff2f2;
+  }
+
+  .chart-aceess {
+    margin-top: 26px;
+    min-width: 105%;
+    margin-left: -25px;
+    height: 242px;
+    background-color: black;
+    opacity: 1;
+    color: white;
+    padding: 10.9% 35.3%;
+    border-radius: 6px;
+    text-align: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #fff2f2;
+  }
+  .incident-number {
+    background-color: bisque;
+    width: 180px;
+    margin-top: 175px;
+    margin-left: 455px;
+  }
+  .car-video {
+    flex: 1 1;
+    border-radius: 4px;
+    position: relative;
+    margin-right: -124px;
+    height: 472px;
+    top: -45px;
+    left: -109px;
+    .video-container {
+      height: 100%;
+      .video-js {
+        width: 100% !important;
+        height: 100% !important;
+      }
+    }
+    video {
+      width: 100%;
+      border-radius: 5px;
+      // height: 405px;
+    }
+  }
+  .car-id {
+    position: absolute;
+    top: -50px;
+    width: 275px;
+    padding: 10px;
+    color: #fff;
+  }
+
+  .lat-logn-details {
+    background: #fff;
+    width: 787px;
+    margin-right: 31px;
+    margin-left: -7px;
+    height: 375px;
+    border-radius: 6px;
+    box-shadow: 0 2px 54px 0 rgba(0, 0, 0, 0.31);
+    background-color: #333546;
+
+    .lat-long-header {
+      height: 15px;
+      // font-family: Roboto;
+      font-size: 15px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      color: #e9e8e8;
+      padding: 20px 20px 32px;
+      border-bottom: 1px solid #4b4d5f;
+      padding-left: 30px;
+    }
+
+    .lat-long-title {
+      height: 20px;
+      // font-family: Roboto;
+      font-size: 14px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1.43;
+      letter-spacing: 0px;
+      color: #eae8e8;
+    }
+
+    .lat-long-title-text {
+      height: 20px;
+      // font-family: Roboto;
+      font-size: 16px;
+      font-weight: 500;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1.25;
+      letter-spacing: 0px;
+      color: #ffffff;
+    }
+
+    .lat-long-row {
+      height: 97px;
+      border-top: 1px solid #ededed;
+
+      .lat-long-padding {
+        padding: 20px 0;
+      }
+      &:first-child {
+        border-top: none;
+      }
+      .lat-long-col {
+        padding: 0;
+      }
+    }
+    .lat-long-container {
+      height: 322px;
+      padding: 0px 45px;
+    }
+    .d-flex {
+      * {
+        width: 150px;
+        margin: 5px;
+      }
+      label {
+        font-weight: bold;
+      }
+      input {
+        margin-right: 30px;
+        border: 1px solid #777777;
+      }
+      .column {
+        position: relative;
+        font-weight: bold;
+        &::after {
+          content: ":";
+          color: black;
+          position: absolute;
+          right: 0;
+        }
+      }
+    }
+  }
+  .map-details {
+    padding: 20px;
+    border-radius: 10px;
+    flex: 1;
+    margin-right: -9px;
+    background: rgba(0, 0, 0, 0.2);
+  }
+  .vjs-big-play-button {
+    left: 0;
+    right: 0;
+    margin: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 100%;
+    height: 3em;
+    line-height: 2.8em;
+  }
+  .control-bar-pos {
+    position: absolute;
+    top: 118%;
+    z-index: 100;
+    margin-left: -208px;
+    min-width: -webkit-fill-available;
+    min-height: 42px;
+  }
+
+  .charts {
+    border-radius: 10px;
+    .donutChart {
+      height: 239px;
+      margin-right: 32px;
+      margin-top: 11px;
+      margin-left: -6px;
+      width: 265px;
+      border-radius: 6px;
+      box-shadow: 0 2px 54px 0 rgba(0, 0, 0, 0.31);
+      background-color: #333546;
+      .donut-chart-header {
+        height: 42px;
+        padding: 13px 48px 11px 30px;
+        // font-family: Roboto;
+        font-size: 15px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        color: #e9e8e8;
+        border-bottom: 1px solid #4b4d5f;
+      }
+      .donut-chart-container {
+        height: 174px;
+        margin-top: 10px;
+      }
+    }
+    .barChart {
+      height: 239px;
+      margin-right: 32px;
+      margin-top: 11px;
+      margin-left: -6px;
+      width: 272px;
+      border-radius: 6px;
+      box-shadow: 0 2px 54px 0 rgba(0, 0, 0, 0.31);
+      background-color: #333546;
+      .bar-chart-header {
+        height: 42px;
+        padding: 13px 48px 11px 30px;
+        // font-family: Roboto;
+        font-size: 15px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        color: #e9e8e8;
+        border-bottom: 1px solid #4b4d5f;
+      }
+      .bar-chart-container {
+        height: 174px;
+        margin-top: 20px;
+      }
+    }
+    .lineChart {
+      margin: 0px;
+      padding-left: 0px;
+      margin-top: 11px;
+      border-radius: 6px;
+      box-shadow: 0 2px 54px 0 rgba(0, 0, 0, 0.31);
+      background-color: #333546;
+      .line-chart-header {
+        height: 42px;
+        padding: 13px 48px 11px 30px;
+        // font-family: Roboto;
+        font-size: 15px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        color: #e9e8e8;
+        border-bottom: 1px solid #4b4d5f;
+      }
+      .line-chart-container {
+        margin-top: 20px;
+      }
+    }
+  }
+  .permission-access {
+    .center-Container {
+      position: relative;
+      height: 100%;
+    }
+
+    .absolute-Center {
+      width: 50%;
+      height: 50%;
+      overflow: auto;
+      margin: auto;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+    }
+  }
+  #charts {
+    .chartjs-size-monitor {
+      height: 300px !important;
+      background: red;
+    }
+  }
+}

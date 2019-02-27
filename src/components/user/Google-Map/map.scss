@@ -1,0 +1,16 @@
+#map {
+  html {
+    height: 100%;
+  }
+  body {
+    height: 100%;
+    margin: 0px;
+    font-family: Helvetica, Arial;
+  }
+  .gm-style div[title] img {
+    display: none;
+  }
+  .gm-style img[src="http://maps.gstatic.com/mapfiles/dd-via.png"] {
+    visibility: hidden;
+  }
+}
