@@ -9,88 +9,63 @@ import CamraWrapper from "./CamraWrapper";
 export default class VideoWrapper extends Component {
   state = {
     show: false,
-    videoData: null,
-    streamData: []
+    videoData: this.props.streamData[0]
   };
-  componentDidMount() {
-    // console.log("componentDidMount", this.props.currentVdData);
+  componentWillMount() {
+    this.streamData = this.props.streamData;
   }
   componentWillReceiveProps(prevProps) {
-    if (prevProps.currentVdData !== this.props.currentVdData) {
-      //Perform some operation
-      this.setState({
-        videoData: prevProps.currentVdData,
-        streamData: prevProps.streamData
-      });
-    }
+    // if (prevProps.currentVdData !== this.props.currentVdData) {
+    // }
   }
 
   onCamraClick = data => {
     // Update video on camra click
     this.setState({ videoData: data });
-    this.props.onReset();
+    this.props.onCamraChange("reset player");
   };
-  renderVideoDOM(data) {
-    if (data) {
-      return (
-        <div className="flex-half ">
-          <div className="row">
-            <div className="col-sm-12">
-              <div className="video-section d-flex box-shadow">
-                <CamraWrapper
-                  streamData={this.state.streamData}
-                  onCamraChange={this.onCamraClick}
-                />
-                {/* <div className="hdr">
-                  <button onClick={event => this.toggleCamras(event)}>
-                    Select View
-                  </button>
-                  <span>VIN: 123456</span>
-                </div>
-                <div
-                  className={classnames("car-info", {
-                    car_hidden: this.state.show
-                  })}
-                >
-                  <div className="car-bg">
-                    <div className="car-img">
-                      <img src={carImg} />
-                      {column.streamData.map((data, j) => (
-                  <span
-                    key={data.name}
-                    className={`sensor pos-${j}`}
-                    onClick={() => this.onCamraClick(data.name, column)}
+
+  renderVideoDOM() {
+    const id = this.props.id;
+    return (
+      <div className="flex-half ">
+        <div className="row">
+          <div className="col-sm-12">
+            <div
+              className="video-section d-flex box-shadow"
+              id={`camra-wrapper-${id}`}
+            >
+              {this.streamData.length > 0 && (
+                <React.Fragment>
+                  <CamraWrapper
+                    streamData={this.streamData}
+                    onCamraChange={this.onCamraClick}
+                    vidId={this.props.vidId}
                   />
-                ))}
-                    </div>
+                  <div className="video-wrapper">
+                    <VideoPlayer
+                      src={this.state.videoData.url}
+                      id={"player-" + id}
+                      playerInstance={this.props.setVdInstance}
+                    />
                   </div>
-                </div> */}
-                <div className="video-wrapper">
-                  <VideoPlayer
-                    src={data.url}
-                    id={"player-" + this.props.id}
-                    playerInstance={this.props.setVdInstance}
-                  />
-                </div>
-              </div>
+                </React.Fragment>
+              )}
             </div>
           </div>
         </div>
-      );
-    } else {
-      return (
-        <div className="spinner-bg">
-          <img src={SpinnerImg} />
-        </div>
-      );
-    }
+      </div>
+    );
   }
+  // return (
+  //   <div className="spinner-bg">
+  //     <img src={SpinnerImg} />
+  //   </div>
+  // );
 
   render() {
     return (
-      <React.Fragment>
-        {this.renderVideoDOM(this.state.videoData)}
-      </React.Fragment>
+      <React.Fragment>{this.renderVideoDOM(this.streamData)}</React.Fragment>
     );
   }
 }

@@ -12,17 +12,14 @@ class VideoControlBar extends Component {
     this.fillBar = document.getElementById("fill");
     this.currentTime = document.getElementById("currentTime");
     this.elem = document.getElementById("playBtn");
+
+    this.createInstance(this.props.videoPlayers);
+    this.elem.style.backgroundImage = `url(${playImg})`;
   }
 
   componentWillReceiveProps(prevProps, nextProps) {
     if (prevProps.videoPlayers !== this.props.videoPlayers) {
-      this.createInstance(prevProps.videoPlayers);
-      //Perform some operation
-      // this.players.push(prevProps.videoPlayers);
-      // let vid = _.uniqBy(this.players, "id_");
-      // this.vid = vid;
-      // this.elem.style.backgroundImage = `url(${playImg})`;
-      // console.log("props", prevProps);
+      console.log("video control bar");
     }
     this.elem.style.backgroundImage = `url(${playImg})`;
   }
@@ -30,10 +27,6 @@ class VideoControlBar extends Component {
     if (videos) {
       const players = [...this.players, ...videos];
       this.players = players;
-      // this.players.push(video);
-      // let vid = _.uniqBy(this.players, "id_");
-      // this.vid = vid;
-      // this.elem.style.backgroundImage = `url(${playImg})`;
     }
   }
 

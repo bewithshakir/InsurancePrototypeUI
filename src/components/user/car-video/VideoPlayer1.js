@@ -26,6 +26,13 @@ class VideoPlayer extends Component {
   componentWillReceiveProps(nextProps) {
     this.loadVideo(nextProps.src, "application/x-mpegURL");
   }
+  componentWillUnmount() {
+    // destroy player on unmount
+    console.log("video player unmount");
+    if (this.player) {
+      this.player.dispose();
+    }
+  }
 
   render() {
     return (

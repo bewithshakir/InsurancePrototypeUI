@@ -1,3 +1,9 @@
+.mainCtrl {
+  .custom-control-bar {
+    pointer-events: none;
+    opacity: 0.3;
+  }
+}
 .custom-control-bar {
   position: relative;
   padding: 14px 30px;

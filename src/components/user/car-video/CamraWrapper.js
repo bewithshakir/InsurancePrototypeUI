@@ -20,21 +20,34 @@ export default class CamraWrapper extends Component {
     this.props.onCamraChange(data);
   }
   // Add class 'active' on camra when user click on it
-  setActiveClass(event) {
-    const allSensorEle = document.querySelectorAll(".car-img .sensor");
-    allSensorEle.forEach((ele, i) => {
-      ele.classList.remove("active");
-    });
+  setActiveClass(event, vidId) {
+    const allSensorEle1 = document.querySelectorAll(
+      "#camra-wrapper-0 .car-img .sensor"
+    );
+    const allSensorEle2 = document.querySelectorAll(
+      "#camra-wrapper-1 .car-img .sensor"
+    );
+
+    if (vidId === 121212) {
+      allSensorEle1.forEach((ele, i) => {
+        ele.classList.remove("active");
+      });
+    } else if (vidId === 123456) {
+      allSensorEle2.forEach((ele, i) => {
+        ele.classList.remove("active");
+      });
+    }
     event.target.classList.add("active");
   }
   render() {
+    const { vidId } = this.props;
     return (
       <React.Fragment>
         <div className="hdr">
           <button onClick={event => this.toggleCamras(event)}>
             Select View
           </button>
-          <span>VIN: 123456</span>
+          <span>VIN: {vidId}</span>
         </div>
         <div
           className={classnames("car-info", {
@@ -53,18 +66,11 @@ export default class CamraWrapper extends Component {
                     })}
                     onClick={e => {
                       this.onCamraClick(data.name, data);
-                      this.setActiveClass(e, i);
+                      this.setActiveClass(e, vidId);
                     }}
                   />
                 );
               })}
-              {/* {column.streamData.map((data, j) => (
-                  <span
-                    key={data.name}
-                    className={`sensor pos-${j}`}
-                    onClick={() => this.onCamraClick(data.name, column)}
-                  />
-                ))} */}
             </div>
           </div>
         </div>

@@ -14,6 +14,7 @@ import DonutChart from "./../charts/donut-chart/donut_Chart";
 import BarChart from "./../charts/barChart-chart2/barChart";
 import LineChart from "./../charts/line-chart/lineChart";
 import LineChartWithTime from "./../charts/line-chart2/lineChartWithTime";
+import playImg from "../../../assets/images/Play_button.png";
 
 class carDetails1 extends Component {
   state = {
@@ -36,38 +37,13 @@ class carDetails1 extends Component {
   players = [];
   showCamra = false;
   componentWillMount() {
-    this.getCarDetails(121212);
-  }
-  componentDidMount() {
-    // this.getCarDetails(121212);
+    const { vin } = this.props.match.params;
+    this.getCarDetails(+vin);
   }
   getCarDetails = async vin => {
     try {
       const response = await carDetailApi.get(`/collidecar/${vin}`);
-
-      // Main data used as a default
-      const mainIndex = _.findIndex(response.data, {
-        nodeType: "Main"
-      });
-
-      response.data.forEach(object => {
-        if (object.streamData.length > 0) {
-          // update streamData inside columns
-          const columns = [...this.state.columns];
-          columns[0].streamData = response.data[mainIndex].streamData;
-
-          // find default video index;
-          let defaultIndex = _.findIndex(columns[0].streamData, {
-            name: "vin121212_cam1"
-          });
-          // set activeUrl to show video in default
-          columns[0].activeUrl =
-            response.data[mainIndex].streamData[defaultIndex].url;
-
-          this.setState({ responseDatas: response.data, columns });
-        }
-      });
-
+      this.setState({ responseDatas: response.data });
       // throw "something went wrong from cardetails api";
     } catch (error) {
       console.log(error);
@@ -75,39 +51,8 @@ class carDetails1 extends Component {
   };
 
   splitLayout() {
-    // const collideIndex = _.findIndex(this.state.responseDatas, {
-    //   nodeType: "Collide"
-    // });
-    // const defaultIndex = _.findIndex(
-    //   this.state.responseDatas[collideIndex].streamData,
-    //   {
-    //     name: "vin123456_cam1"
-    //   }
-    // );
-
-    // const columns = [
-    //   ...this.state.columns,
-    //   {
-    //     id: 1,
-    //     isSensorHidden: false
-    //   }
-    // ];
-    // this.setState({ columns });
     this.setState({ isSplit: !this.state.isSplit });
-    // this.resetVideo(this.state.vdInstance);
-  }
-
-  resetVideo(videos) {
-    if (videos) {
-      videos[0].pause();
-      videos[1].pause();
-
-      videos[0].currentTime(0);
-      videos[1].currentTime(1);
-
-      videos[0].load();
-      videos[1].load();
-    }
+    this.resetVideo(this.state.vdInstance);
   }
 
   setVdInstance(player) {
@@ -116,125 +61,101 @@ class carDetails1 extends Component {
   }
 
   toggleCamras(event, index) {
-    // const columns = [...this.state.columns];
-    // columns[index].isSensorHidden = !this.state.columns[index].isSensorHidden;
-    // this.setState({ columns });
     this.showCamra = true;
-    console.log("index", index);
     this.setState({ show: true });
   }
 
-  onCamraClick(camraName, column) {
-    //vin123456_cam1
-    const id = column.id;
-
-    // Find active video index
-    const currentIndex = _.findIndex(column.streamData, { name: camraName });
-
-    // Update video url on camra click
-    const columns = [...this.state.columns];
-    columns[id].activeUrl = columns[id].streamData[currentIndex].url;
-    this.setState({ columns });
+  onCamraChange(data) {
+    this.resetVideo(this.state.vdInstance);
   }
 
-  resetPlayBtn = () => {
-    // this.setState({ resetPlay: true });
-  };
-
-  renderVideoDOM(columns) {
-    if (columns.length > 0) {
-      return columns.map((column, i) => {
-        if (column.streamData.length > 0) {
-          return (
-            <div key={i} className="flex-half ">
-              <div className="row">
-                <div className="col-sm-12">
-                  <div className="video-section d-flex box-shadow">
-                    <div className="hdr">
-                      <button onClick={event => this.toggleCamras(event, i)}>
-                        Select View
-                      </button>
-                      <span>VIN: 123456</span>
-                    </div>
-                    <div
-                      className={classnames("car-info", {
-                        car_hidden: this.state.show
-                      })}
-                    >
-                      <div className="car-bg">
-                        <div className="car-img">
-                          <img src={carImg} />
-                          {column.streamData.map((data, j) => (
-                            <span
-                              key={data.name}
-                              className={`sensor pos-${j}`}
-                              onClick={() =>
-                                this.onCamraClick(data.name, column)
-                              }
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="video-wrapper">
-                      <VideoPlayer
-                        src={column.activeUrl}
-                        id={"player-" + column.id}
-                        playerInstance={player => this.setVdInstance(player)}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-        } else {
-          return (
-            <div key={i} className="spinner-bg">
-              <img src={SpinnerImg} />
-            </div>
-          );
-        }
+  resetVideo(videos) {
+    if (videos.length > 0) {
+      videos.forEach(video => {
+        video.pause();
+        video.currentTime(0);
+        video.trigger("loadstart");
       });
+      const elem = document.getElementById("playBtn");
+      elem.style.backgroundImage = `url(${playImg})`;
     }
   }
 
   renderVideoWrapper(data) {
     if (data) {
       console.log("data", data);
-      // const mainData = data[]
+      return data.map((videoData, i) => {
+        return (
+          <VideoWrapper
+            key={i}
+            streamData={videoData.streamData}
+            id={i}
+            setVdInstance={player => this.setVdInstance(player)}
+            isSplitActive={this.state.isSplit}
+            vidId={videoData.carData[0].vin}
+            onCamraChange={data => this.onCamraChange(data)}
+          />
+        );
+      });
     }
   }
 
+  // Add class 'mainCtrl' if streamData is empty
+  setMainCtrlClass(isSplit, streamData) {
+    console.log("set main control class executed");
+    const controlBarElem = document.getElementById("control-bar");
+    if (isSplit) {
+      controlBarElem.classList.remove("mainCtrl");
+    } else {
+      if (streamData.length === 0) {
+        controlBarElem.classList.add("mainCtrl");
+      }
+    }
+  }
   render() {
+    let mainIndex;
+    if (this.state.responseDatas) {
+      mainIndex = _.findIndex(this.state.responseDatas, {
+        nodeType: "Main"
+      });
+      if (this.state.responseDatas[mainIndex].streamData.length === 0) {
+        this.setMainCtrlClass(
+          this.state.isSplit,
+          this.state.responseDatas[mainIndex].streamData
+        );
+      }
+    }
+
     return (
       <React.Fragment>
         <Header isAuthorized={this.state.isLogin} />
         <div className="container-fluid car-details-1">
           <h2>Car Information Details</h2>
-          {/* <button onClick={e => this.change(e, 0)}>change</button> */}
           <div className="graph-section box-shadow gap-row">Google Map</div>
           {/* control bar */}
-          <div className="box-shadow control-bar gap-row ">
-            {this.state.vdInstance && (
-              <VideoControlBar
-                videoPlayers={this.state.vdInstance}
-                className=""
-                isSplit={this.state.isSplit}
-              />
+          <div
+            id="control-bar"
+            className={classnames("box-shadow control-bar gap-row")}
+          >
+            {this.state.vdInstance.length > 0 && (
+              <React.Fragment>
+                <VideoControlBar
+                  videoPlayers={this.state.vdInstance}
+                  isSplit={this.state.isSplit}
+                />
+                <button
+                  onClick={e => this.splitLayout()}
+                  className="split-icon"
+                  disabled={
+                    this.state.responseDatas
+                      ? !this.state.responseDatas[mainIndex].collide
+                      : false
+                  }
+                >
+                  Split
+                </button>
+              </React.Fragment>
             )}
-
-            <button
-              onClick={e => this.splitLayout()}
-              className="split-icon"
-              disabled={
-                this.state.responseDatas
-                  ? !this.state.responseDatas[0].collide
-                  : false
-              }
-            >
-              Split
-            </button>
           </div>
 
           <div
@@ -243,36 +164,6 @@ class carDetails1 extends Component {
             })}
           >
             {this.renderVideoWrapper(this.state.responseDatas)}
-            {/* <VideoWrapper
-              currentVdData={
-                this.state.responseDatas
-                  ? this.state.responseDatas[0].streamData[0]
-                  : null
-              }
-              id="0"
-              setVdInstance={player => this.setVdInstance(player)}
-              streamData={
-                this.state.responseDatas
-                  ? this.state.responseDatas[0].streamData
-                  : []
-              }
-              onReset={this.resetPlayBtn}
-            /> */}
-            {/* <VideoWrapper
-              currentVdData={
-                this.state.responseDatas
-                  ? this.state.responseDatas[1].streamData[1]
-                  : null
-              }
-              id="1"
-              setVdInstance={player => this.setVdInstance(player)}
-              streamData={
-                this.state.responseDatas
-                  ? this.state.responseDatas[1].streamData
-                  : []
-              }
-              onReset={this.resetPlayBtn}
-            /> */}
           </div>
 
           <div className="row gap-row graphs charts" id="charts">
