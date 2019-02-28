@@ -47,10 +47,10 @@
       box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.2);
       background-color: #424558;
       width: 217px;
-      height: 250px;
       margin-left: -8px;
       margin-bottom: 7px;
       margin-top: 7px;
+      padding-bottom: 10px;
       .issue-image {
         background: url("../../../assets/images/issue-task-24-px.svg") top
           center no-repeat;
@@ -116,7 +116,6 @@
     }
     .column-1 {
       .issue-card {
-        height: 220px;
         .issue-category {
           width: 185px;
         }

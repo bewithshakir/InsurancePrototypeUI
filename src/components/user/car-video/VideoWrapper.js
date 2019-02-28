@@ -26,7 +26,7 @@ export default class VideoWrapper extends Component {
   };
 
   renderVideoDOM() {
-    const id = this.props.id;
+    const { id, vidId, setVdInstance, message } = this.props;
     return (
       <div className="flex-half ">
         <div className="row">
@@ -40,16 +40,26 @@ export default class VideoWrapper extends Component {
                   <CamraWrapper
                     streamData={this.streamData}
                     onCamraChange={this.onCamraClick}
-                    vidId={this.props.vidId}
+                    vidId={vidId}
                   />
                   <div className="video-wrapper">
                     <VideoPlayer
                       src={this.state.videoData.url}
                       id={"player-" + id}
-                      playerInstance={this.props.setVdInstance}
+                      playerInstance={setVdInstance}
                     />
                   </div>
                 </React.Fragment>
+              )}
+              {message && (
+                <h3>
+                  {message} (vin:{vidId})
+                </h3>
+              )}
+              {!message && this.streamData.length === 0 ? (
+                <h3>No video found for vin:{vidId} </h3>
+              ) : (
+                ""
               )}
             </div>
           </div>

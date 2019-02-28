@@ -1,26 +1,23 @@
 import React, { Component } from "react";
 import classnames from "classnames";
 import _ from "lodash";
-import SpinnerImg from "../../../assets/images/spinner-gif.gif";
 
 import "./carDetail1.scss";
 import Header from "../../../shared/header/header";
-import carImg from "../../../assets/images/car.png";
-import VideoPlayer from "../car-video/VideoPlayer";
 import VideoControlBar from "../../video-control-bar/VideoControlBar";
 import carDetailApi from "../../../apis/carDetailApi";
 import VideoWrapper from "../car-video/VideoWrapper";
-import DonutChart from "./../charts/donut-chart/donut_Chart";
 import BarChart from "./../charts/barChart-chart2/barChart";
 import LineChart from "./../charts/line-chart/lineChart";
 import LineChartWithTime from "./../charts/line-chart2/lineChartWithTime";
 import playImg from "../../../assets/images/Play_button.png";
+import Spinner from "../../spinner/Spinner";
 
 class carDetails1 extends Component {
   state = {
     isLogin: true,
     isSplit: false,
-    spinner: true,
+    spinner: false,
     responseDatas: null,
     show: false,
     src:
@@ -94,6 +91,9 @@ class carDetails1 extends Component {
             isSplitActive={this.state.isSplit}
             vidId={videoData.carData[0].vin}
             onCamraChange={data => this.onCamraChange(data)}
+            message={
+              videoData.hasOwnProperty("message") ? videoData.message : null
+            }
           />
         );
       });
@@ -114,21 +114,22 @@ class carDetails1 extends Component {
   }
   render() {
     let mainIndex;
-    if (this.state.responseDatas) {
-      mainIndex = _.findIndex(this.state.responseDatas, {
+    const { isLogin, responseDatas, vdInstance, isSplit } = this.state;
+    if (responseDatas) {
+      mainIndex = _.findIndex(responseDatas, {
         nodeType: "Main"
       });
-      if (this.state.responseDatas[mainIndex].streamData.length === 0) {
+      if (responseDatas[mainIndex].streamData.length === 0) {
         this.setMainCtrlClass(
           this.state.isSplit,
-          this.state.responseDatas[mainIndex].streamData
+          responseDatas[mainIndex].streamData
         );
       }
     }
 
     return (
       <React.Fragment>
-        <Header isAuthorized={this.state.isLogin} />
+        <Header isAuthorized={isLogin} />
         <div className="container-fluid car-details-1">
           <h2>Car Information Details</h2>
           <div className="graph-section box-shadow gap-row">Google Map</div>
@@ -137,19 +138,14 @@ class carDetails1 extends Component {
             id="control-bar"
             className={classnames("box-shadow control-bar gap-row")}
           >
-            {this.state.vdInstance.length > 0 && (
+            {vdInstance.length > 0 && (
               <React.Fragment>
-                <VideoControlBar
-                  videoPlayers={this.state.vdInstance}
-                  isSplit={this.state.isSplit}
-                />
+                <VideoControlBar videoPlayers={vdInstance} isSplit={isSplit} />
                 <button
                   onClick={e => this.splitLayout()}
                   className="split-icon"
                   disabled={
-                    this.state.responseDatas
-                      ? !this.state.responseDatas[mainIndex].collide
-                      : false
+                    responseDatas ? !responseDatas[mainIndex].collide : false
                   }
                 >
                   Split
@@ -160,10 +156,10 @@ class carDetails1 extends Component {
 
           <div
             className={classnames("d-flex split-sect gap-row", {
-              splitHor: this.state.isSplit
+              splitHor: isSplit
             })}
           >
-            {this.renderVideoWrapper(this.state.responseDatas)}
+            {this.renderVideoWrapper(responseDatas)}
           </div>
 
           <div className="row gap-row graphs charts" id="charts">
@@ -184,6 +180,7 @@ class carDetails1 extends Component {
             </div>
           </div>
         </div>
+        {!responseDatas && <Spinner />}
       </React.Fragment>
     );
   }

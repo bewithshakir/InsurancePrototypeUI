@@ -20,7 +20,7 @@ class Charts extends Component {
         <div className=" bar-chart-container">
           <Bar
             data={this.state.chartData}
-            height={275}
+            height={200}
             options={{
               legend: {
                 display: true,

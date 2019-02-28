@@ -28,11 +28,12 @@ export default class CamraWrapper extends Component {
       "#camra-wrapper-1 .car-img .sensor"
     );
 
-    if (vidId === 121212) {
+    if (allSensorEle1.length > 0) {
       allSensorEle1.forEach((ele, i) => {
         ele.classList.remove("active");
       });
-    } else if (vidId === 123456) {
+    }
+    if (allSensorEle2.length > 0) {
       allSensorEle2.forEach((ele, i) => {
         ele.classList.remove("active");
       });
@@ -59,7 +60,7 @@ export default class CamraWrapper extends Component {
               <img src={carImg} />
               {this.state.streamData.map((data, i) => {
                 return (
-                  <span
+                  <button
                     key={i}
                     className={classnames(`sensor pos-${i}`, {
                       active: i == 0
@@ -68,6 +69,7 @@ export default class CamraWrapper extends Component {
                       this.onCamraClick(data.name, data);
                       this.setActiveClass(e, vidId);
                     }}
+                    data-id={vidId}
                   />
                 );
               })}
