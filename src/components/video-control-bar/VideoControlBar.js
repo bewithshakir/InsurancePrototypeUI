@@ -15,13 +15,36 @@ class VideoControlBar extends Component {
 
     this.createInstance(this.props.videoPlayers);
     this.elem.style.backgroundImage = `url(${playImg})`;
+
+    this.players[0].on("ready", e => {
+      console.log("ready");
+      this.players[0].on("loadeddata", function() {
+        console.log("loadeddata");
+      });
+    });
   }
 
   componentWillReceiveProps(prevProps, nextProps) {
-    if (prevProps.videoPlayers !== this.props.videoPlayers) {
-      console.log("video control bar");
+    if (prevProps.isSplit !== this.props.isSplit) {
+      if (prevProps.isSplit) {
+        if (this.players.length > 0) {
+          this.stopMainPlayerOnBufferCollideVid(
+            this.players[0],
+            this.players[1]
+          );
+        }
+      }
     }
     this.elem.style.backgroundImage = `url(${playImg})`;
+  }
+  stopMainPlayerOnBufferCollideVid(mainVid, collideVid) {
+    // Stop main player on buffer collide video as seek bar is created with main player
+    collideVid.on("waiting", e => {
+      mainVid.pause();
+    });
+    collideVid.on("playing", e => {
+      mainVid.play();
+    });
   }
   createInstance(videos) {
     if (videos) {
@@ -33,16 +56,15 @@ class VideoControlBar extends Component {
   playOrPause(event) {
     let vid1, vid2;
     vid1 = this.players[0];
-
     if (this.players.length > 0) {
       vid2 = this.players[1];
     }
 
     if (vid1 && vid2) {
-      console.log("two videos");
+      console.log("Both videos");
       this.isPlayPause(vid1, vid2);
     } else if (vid1) {
-      console.log("one video");
+      console.log("Single video");
       this.isPlayPause(vid1);
     }
     this.seekTimeUpdate(vid1);
