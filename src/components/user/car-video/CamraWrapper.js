@@ -21,24 +21,26 @@ export default class CamraWrapper extends Component {
   }
   // Add class 'active' on camra when user click on it
   setActiveClass(event, vidId) {
-    const allSensorEle1 = document.querySelectorAll(
-      "#camra-wrapper-0 .car-img .sensor"
-    );
-    const allSensorEle2 = document.querySelectorAll(
-      "#camra-wrapper-1 .car-img .sensor"
-    );
+    // const allSensorEle1 = document.querySelectorAll(
+    //   "#camra-wrapper-0 .car-img .sensor"
+    // );
+    // const allSensorEle2 = document.querySelectorAll(
+    //   "#camra-wrapper-1 .car-img .sensor"
+    // );
 
-    if (allSensorEle1.length > 0) {
-      allSensorEle1.forEach((ele, i) => {
-        ele.classList.remove("active");
-      });
-    }
-    if (allSensorEle2.length > 0) {
-      allSensorEle2.forEach((ele, i) => {
-        ele.classList.remove("active");
-      });
-    }
+    // if (allSensorEle1.length > 0) {
+    //   allSensorEle1.forEach((ele, i) => {
+    //     ele.classList.remove("active");
+    //   });
+    // }
+    // if (allSensorEle2.length > 0) {
+    //   allSensorEle2.forEach((ele, i) => {
+    //     ele.classList.remove("active");
+    //   });
+    // }
+
     event.target.classList.add("active");
+    // console.log($("#camra-wrapper-0"));
   }
   render() {
     const { vidId } = this.props;

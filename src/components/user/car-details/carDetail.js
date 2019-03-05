@@ -174,7 +174,6 @@ class CarDetail extends Component {
     let car1 = new GoogleMap();
     console.log("car>>>>>>>>>>>>>>", car1);
     //})
-
     car1.cardata = [
       // {
       //   vin: "121212",
@@ -272,6 +271,13 @@ class CarDetail extends Component {
       { lat: 26.158303, lng: -97.870086, name: "Station 22" },
       { lat: 26.160103, lng: -97.856329, name: "Station 23" }
     ];
+
+    car1.cardataforAnimation = car1.cardata.map(item => {
+      return {
+        location: new window.google.maps.LatLng(item.lat, item.lng),
+        stopover: false
+      };
+    });
 
     let setRoute = setRoutes.bind(car1);
 

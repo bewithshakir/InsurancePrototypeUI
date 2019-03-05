@@ -2,13 +2,13 @@
   color: #e6e4e4;
   .car-list-header {
     // font-family: Roboto;
-    font-size: 28px;
+    font-size: 20px;
     font-weight: normal;
     font-style: normal;
     font-stretch: normal;
     line-height: normal;
     letter-spacing: normal;
-    color: #e6e4e4;
+    color: #b7b7b7;
     padding: 29px 0 28px;
   }
 
@@ -16,6 +16,7 @@
     border-radius: 6px;
     box-shadow: 0 2px 54px 0 rgba(0, 0, 0, 0.31);
     background-color: #242939;
+    top: 10px;
     // color: #b7b7b7;
 
     .user-list-table-result {
@@ -30,14 +31,20 @@
       }
       .rt-thead.-header {
         border: none;
+        font-weight: normal;
       }
       .rt-thead .rt-tr {
         border-top: none;
-        border-bottom: 1px solid #eef3ff;
+        border-bottom: 1px solid #474f67;
+        // .rt-th {
+        //   min-width: 19%;
+        //   width: 0px !important;
+        // }
       }
       .rt-tr-group {
         border: none;
-        border-bottom: 1px solid #eef3ff;
+        border-bottom: 1px solid #474f67;
+
         &:last-child {
           border-bottom: none;
         }
@@ -59,15 +66,6 @@
           margin-bottom: 3px;
           margin-right: 6px;
         }
-        .status-round-pedding {
-          height: 5px;
-          width: 5px;
-          background-color: #d3cd21;
-          border-radius: 50%;
-          display: inline-block;
-          margin-bottom: 3px;
-          margin-right: 6px;
-        }
         .acl-permission-raise {
           background-color: #3c3f52;
           border: none;
@@ -75,6 +73,7 @@
           color: #b7b7b7;
           font-size: 15px;
           padding: 4px 12px;
+          cursor: pointer;
         }
       }
 
@@ -85,6 +84,10 @@
         }
       }
     }
+  }
+  .cell-text {
+    line-height: 29px;
+    color: #b7b7b7;
   }
 }
 
@@ -97,4 +100,9 @@
 .issue-modal-content-acl {
   padding: 1% 10%;
   font-size: 20px;
+}
+
+.car-mang-header {
+  background: url("../../../assets/images/Org_admin.png") top center no-repeat;
+  height: 100px;
 }

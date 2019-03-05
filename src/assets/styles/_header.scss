@@ -1,5 +1,15 @@
 .top-header {
-  min-height: 85px;
+  min-height: 65px;
+  background-color: white;
+  box-shadow: 0 1px 15px 0 rgba(69, 65, 78, 0.1),
+    0 2px 14px 0 rgba(0, 0, 0, 0.5);
+  color: #646262;
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+  .image-header {
+    height: 40px;
+    margin-left: 5%;
+  }
   .searchBox {
     border-radius: 30px;
     width: 250px;
@@ -8,8 +18,10 @@
   .user-name {
     line-height: 1;
     p {
-      margin: 0;
-      font-size: 15px;
+      margin: 2px;
+      font-size: 17px;
+      font-weight: 550;
+      color: #555050;
     }
     span {
       font-size: 13px;
@@ -23,17 +35,23 @@
   }
   .badge {
     position: absolute;
-    background: #117e96;
-    border: 1px solid black;
+    background: #f4606a;
+    border: 1px #f4606a;
     border-radius: 100%;
-    top: -7px;
-    min-width: 14px;
+    min-width: 8px;
     text-align: center;
     font-size: 10px;
     line-height: 7px;
     color: #fff;
-    right: -6px;
-    min-height: 14px;
+    right: -2px;
+    min-height: 8px;
+  }
+  .profile-image {
+    margin-left: 8px;
+  }
+  .rounded-circle {
+    margin-left: 5px;
+    border-radius: 50% !important;
   }
   .dropdown-toggle {
     &::after {

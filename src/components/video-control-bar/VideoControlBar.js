@@ -1,51 +1,64 @@
 import React, { Component } from "react";
 import _ from "lodash";
+
 import "./VideoControlBar.scss";
 import pauseImg from "../../assets/images/baseline-pause-24-px.png";
 import playImg from "../../assets/images/Play_button.png";
+import Spinner from "../spinner/Spinner";
 
 class VideoControlBar extends Component {
   players = [];
-  state = { val: 0 };
+  state = { val: 0, show: true };
 
   componentDidMount() {
     this.fillBar = document.getElementById("fill");
     this.currentTime = document.getElementById("currentTime");
     this.elem = document.getElementById("playBtn");
+    this.seekslider = document.getElementById("seekslider");
 
     this.createInstance(this.props.videoPlayers);
     this.elem.style.backgroundImage = `url(${playImg})`;
 
-    this.players[0].on("ready", e => {
-      console.log("ready");
-      this.players[0].on("loadeddata", function() {
-        console.log("loadeddata");
-      });
+    // Show Spinner on video load
+    this.showSpinnerOnLoadVd(this.players);
+    // Stop Main video when collide video buffered
+    this.stopMainPlayerOnBufferCollideVid(this.players[0], this.players[1]);
+
+    this.seekslider.addEventListener("mouseup", event => {
+      console.log("keyup");
+
+      // do something
     });
   }
 
   componentWillReceiveProps(prevProps, nextProps) {
-    if (prevProps.isSplit !== this.props.isSplit) {
-      if (prevProps.isSplit) {
-        if (this.players.length > 0) {
-          this.stopMainPlayerOnBufferCollideVid(
-            this.players[0],
-            this.players[1]
-          );
-        }
-      }
-    }
     this.elem.style.backgroundImage = `url(${playImg})`;
   }
+
+  showSpinnerOnLoadVd(players) {
+    if (players.length > 0) {
+      players.forEach((player, i) => {
+        player.on("loadeddata", () => {
+          if (i === 1) {
+            this.setState({ show: false });
+          }
+        });
+      });
+    }
+  }
+
   stopMainPlayerOnBufferCollideVid(mainVid, collideVid) {
     // Stop main player on buffer collide video as seek bar is created with main player
-    collideVid.on("waiting", e => {
-      mainVid.pause();
-    });
-    collideVid.on("playing", e => {
-      mainVid.play();
-    });
+    if (mainVid && collideVid) {
+      collideVid.on("waiting", e => {
+        mainVid.pause();
+      });
+      collideVid.on("playing", e => {
+        mainVid.play();
+      });
+    }
   }
+
   createInstance(videos) {
     if (videos) {
       const players = [...this.players, ...videos];
@@ -61,10 +74,10 @@ class VideoControlBar extends Component {
     }
 
     if (vid1 && vid2) {
-      console.log("Both videos");
+      console.log("two videos");
       this.isPlayPause(vid1, vid2);
     } else if (vid1) {
-      console.log("Single video");
+      console.log("one video");
       this.isPlayPause(vid1);
     }
     this.seekTimeUpdate(vid1);
@@ -73,12 +86,17 @@ class VideoControlBar extends Component {
   isPlayPause(vid1, vid2) {
     if (vid1) {
       if (vid1.paused()) {
+        // Move car on play
+        this.props.startAnimate();
         vid1.play();
         vid2 && vid2.play();
         this.elem.style.backgroundImage = `url(${pauseImg})`;
       } else {
         vid1.pause();
         vid2 && vid2.pause();
+        // Stop car on pause
+        this.props.stopAnimate();
+
         this.elem.style.backgroundImage = `url(${playImg})`;
       }
     }
@@ -96,12 +114,6 @@ class VideoControlBar extends Component {
     }
     vid1.currentTime(seekToVid1);
     this.setState({ val: val });
-
-    // vid1.on("waiting", function() {
-    //   console.log("waiting");
-    //   vid1.pause();
-    //   this.elem.style.backgroundImage = `url(${playImg})`;
-    // });
   }
 
   seekTimeUpdate(vid) {
@@ -112,6 +124,7 @@ class VideoControlBar extends Component {
         self.setState({ val: nt });
         // Update time in ui
         this.timeUpdateUI(vid);
+        this.props.getTimeRange(vid.currentTime());
       });
     }
   }
@@ -173,6 +186,7 @@ class VideoControlBar extends Component {
           <span>&nbsp;/&nbsp;</span>
           <span id="durtimetext">00:00</span>
         </div>
+        {this.state.show && <Spinner />}
       </div>
     );
   }

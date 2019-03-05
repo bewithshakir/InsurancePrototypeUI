@@ -1,6 +1,7 @@
 // Library imports
 import React, { Component } from "react";
 import { Draggable } from "react-beautiful-dnd";
+import { Link } from "react-router-dom";
 // Images import
 import userImage from "../../../../assets/images/issue-task-24-px.svg";
 import chatBubble from "../../../../assets/images/outline-chat-bubble-24-px.svg";
@@ -54,11 +55,20 @@ export default class Task extends Component {
               <div className="col-md-12">
                 <div className="issue-content">
                   Insurance claim request <br />
-                  <span>
+                  <span
+                    className={
+                      "" + (this.props.task.acl ? "bg-yellow" : "bg-normal")
+                    }
+                  >
                     Vin - {this.props.task.vin} <br />
                   </span>
                   {this.props.task.collideVin !== 0 ? (
-                    <span>
+                    <span
+                      className={
+                        "" +
+                        (this.props.task.collideACL ? "bg-yellow" : "bg-normal")
+                      }
+                    >
                       Vin -{this.props.task.collideVin} <br />
                     </span>
                   ) : null}
@@ -72,11 +82,14 @@ export default class Task extends Component {
                   <div className="issue-category">Insurance Claim Request</div>
                 </div>
                 <div className="col-md-3">
-                  <img
-                    src={viewCarDetail}
-                    className="view-issue"
-                    onClick={this.openCarDetails}
-                  />
+                  <Link
+                    to={{
+                      pathname: "carDetails1/" + this.props.task.vin,
+                      param1: "Par1"
+                    }}
+                  >
+                    <img src={viewCarDetail} className="view-issue" />
+                  </Link>
                 </div>
               </div>
             ) : (

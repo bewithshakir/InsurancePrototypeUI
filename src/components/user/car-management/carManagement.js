@@ -8,6 +8,9 @@ import Header from "../../../shared/header/header.js";
 import {} from "./_carManagement.scss";
 import pushNotificationService from "../services/pushNotificationService.js";
 import IssueModal from "../issue-management/modal/form";
+import arrows from "../../../assets/images/arrow.png";
+import icon from "../../../assets/images/Dashbaord.png";
+import oval from "../../../assets/images/Oval.png";
 
 class UserManagement extends Component {
   state = {
@@ -64,7 +67,8 @@ class UserManagement extends Component {
       notification: {
         title: "Data Access Permission",
         body: "Notification for permission from car list with vin number" + vin,
-        click_action: "http://localhost:3000/permission/" + vin
+        click_action:
+          "http://ec2-18-206-226-75.compute-1.amazonaws.com/permission/" + vin
       },
       to: notificationToken
     };
@@ -91,13 +95,13 @@ class UserManagement extends Component {
     if (this.state.modalForFailure) {
       return (
         <div className="row issue-modal-content-acl">
-          <span>ACL permission notification couldn't sent.</span>
+          <span>ACL permission notification couldn't be sent.</span>
         </div>
       );
     }
     return (
       <div className="row issue-modal-content-acl">
-        <span>ACL permission notification has sent.</span>
+        <span>ACL permission notification has been sent.</span>
       </div>
     );
   }
@@ -112,10 +116,10 @@ class UserManagement extends Component {
         accessor: "",
         Cell: ({ original }) => {
           return (
-            <div className="d-flex align-items-center">
+            <div className="d-flex align-items-center cell-text">
               <Link
                 to={{
-                  pathname: "/carDetails/" + original.vin,
+                  pathname: "/carDetails1/" + original.vin,
                   param1: "Par1"
                 }}
                 className="car-name"
@@ -128,11 +132,25 @@ class UserManagement extends Component {
       },
       {
         Header: "Car Modal Name",
-        accessor: "model"
+        accessor: "",
+        Cell: ({ original }) => {
+          return (
+            <div className="d-flex align-items-center cell-text">
+              {original.model}
+            </div>
+          );
+        }
       },
       {
         Header: "Car Trim",
-        accessor: "carTrim"
+        accessor: "",
+        Cell: ({ original }) => {
+          return (
+            <div className="d-flex align-items-center cell-text">
+              {original.carTrim}
+            </div>
+          );
+        }
       },
       {
         Header: "ACL Permission",
@@ -153,7 +171,7 @@ class UserManagement extends Component {
         Header: "Status",
         Cell: ({ original }) => {
           return (
-            <div>
+            <div className="d-flex align-items-center cell-text">
               <span
                 className={
                   "status-round-" + original.carStatus.toLocaleLowerCase()
@@ -203,16 +221,31 @@ class UserManagement extends Component {
   render() {
     return (
       <div className="car-management">
-        <Header isAuthorized={this.state.isLogin} />
+        <Header
+          isAuthorized={this.state.isLogin}
+          classNames="car-mang-header"
+        />
         <div className="container">
           <div className="user-list row">
-            <div className="car-list-header col-md-12">ACL Permission</div>
+            <div className="car-list-header col-md-12">
+              <img src={icon} alt="" style={{ marginRight: 12 }} />
+              <img src={oval} alt="" style={{ marginRight: 12 }} />
+              <span>Car</span>
+              <img
+                src={arrows}
+                alt=""
+                style={{ marginLeft: 12, marginRight: 12 }}
+              />
+              <span style={{ color: "#ffffff", fontSize: 18 }}>
+                ACL Permission
+              </span>
+            </div>
             <div className="col-md-12 user-list-table-container">
               <div className="row">
                 {/* <div className="col-md-12">{this.renderTableRowActions()}</div> */}
 
                 {this.state.loadingSpinner ? (
-                  <div className="col-md-12">
+                  <div className="col-md-12" style={{ marginTop: 10 }}>
                     <ReactTable
                       className="user-list-table table-striped mt-3"
                       data={this.state.data}

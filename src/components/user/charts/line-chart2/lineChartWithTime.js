@@ -11,7 +11,12 @@ export default class lineChartWithTime extends React.Component {
     };
   }
 
-  getLineChartData() {
+  componentWillMount() {
+    console.log("in the line chart props flag", this.props.showTwoCharts);
+    this.getLineChartData(this.props.showTwoCharts);
+  }
+
+  getLineChartData(flag) {
     const dataFirst = {
       label: "Car 1",
       fill: false,
@@ -55,18 +60,25 @@ export default class lineChartWithTime extends React.Component {
       data: [81, 46, 65, 35, 54, 80]
     };
 
+    let dataSets = [];
+    if (flag.showChartsForCar1 && !flag.showChartsForCar2) {
+      dataSets = [dataFirst];
+    } else if (!flag.showChartsForCar1 && flag.showChartsForCar2) {
+      dataSets = [dataSecond];
+    } else if (flag.showChartsForCar1 && flag.showChartsForCar2) {
+      dataSets = [dataFirst, dataSecond];
+    }
     const data = {
-      labels: ["2013", "2014", "2015", "2016", "2017", "2018"],
-      datasets: [dataFirst, dataSecond]
+      labels: ["9:00", "10:00", "11:00", "12:00", "13:00", "14:00"],
+      datasets: dataSets
     };
     this.setState({
       lineChartData: data
     });
   }
-
-  componentDidMount() {
-    this.getLineChartData();
-  }
+  componentWillReceiveProps = nextprops => {
+    this.getLineChartData(nextprops.showTwoCharts);
+  };
 
   render() {
     // Chart.plugins.register({

@@ -97,7 +97,8 @@ class IssueManagement extends Component {
       notification: {
         title: "Notification",
         body: "Notification for permission from car list with vin number" + vin,
-        click_action: "http://localhost:3000/permission/" + vin
+        click_action:
+          "http://ec2-18-206-226-75.compute-1.amazonaws.com/permission/" + vin
       },
       to: token
     };
@@ -283,13 +284,13 @@ class IssueManagement extends Component {
     if (this.state.notificationFailureModal) {
       return (
         <div className="row issue-modal-content-acl">
-          <span>ACL permission notification couldn't sent.</span>
+          <span>ACL permission notification couldn't be sent.</span>
         </div>
       );
     } else {
       return (
         <div className="row issue-modal-content-acl">
-          <span>ACL permission notification has sent.</span>
+          <span>ACL permission notification has been sent.</span>
         </div>
       );
     }

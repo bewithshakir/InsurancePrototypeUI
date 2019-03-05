@@ -695,7 +695,7 @@ function animate(index, d, tick) {
   //console.log("this.poly2",this.poly2);
   let self = this;
   this.timerHandle[index] = setTimeout(() => {
-    animate.call(self, index, d + 2);
+    animate.call(self, index, d + 1);
   }, tick || 745);
 }
 

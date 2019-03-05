@@ -51,13 +51,23 @@ export default class VideoWrapper extends Component {
                   </div>
                 </React.Fragment>
               )}
-              {message && (
+              {/* {message && (
                 <h3>
                   {message} (vin:{vidId})
                 </h3>
-              )}
+              )} */}
               {!message && this.streamData.length === 0 ? (
                 <h3>No video found for vin:{vidId} </h3>
+              ) : (
+                ""
+              )}
+              {/* {message && this.streamData.length === 0 ? (
+                <h3>No video found for vin:{vidId} </h3>
+              ) : (
+                ""
+              )} */}
+              {message && message.indexOf("video") !== -1 ? (
+                <h3>You do not have permissions to view video data!{vidId} </h3>
               ) : (
                 ""
               )}

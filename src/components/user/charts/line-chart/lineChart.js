@@ -11,7 +11,7 @@ export default class lineChart extends React.Component {
     };
   }
 
-  getLineChartData() {
+  getLineChartData(flag) {
     const dataFirst = {
       label: "Car 1",
       fill: false,
@@ -55,17 +55,31 @@ export default class lineChart extends React.Component {
       data: [81, 46, 55, 65, 72, 80]
     };
 
+    let dataSets = [];
+    if (flag.showChartsForCar1 && !flag.showChartsForCar2) {
+      dataSets = [dataFirst];
+    } else if (!flag.showChartsForCar1 && flag.showChartsForCar2) {
+      dataSets = [dataSecond];
+    } else if (flag.showChartsForCar1 && flag.showChartsForCar2) {
+      dataSets = [dataFirst, dataSecond];
+    }
+
+    // const dataSets = flag === 2 ? [dataFirst, dataSecond] : [dataFirst];
     const data = {
       labels: ["2013", "2014", "2015", "2016", "2017", "2018"],
-      datasets: [dataFirst, dataSecond]
+      datasets: dataSets
     };
     this.setState({
       lineChartData: data
     });
   }
+  componentWillReceiveProps = nextprops => {
+    this.getLineChartData(nextprops.showTwoCharts);
+  };
 
-  componentDidMount() {
-    this.getLineChartData();
+  componentWillMount() {
+    console.log("in the Line Chart1", this.props.showTwoCharts);
+    this.getLineChartData(this.props.showTwoCharts);
   }
 
   render() {
