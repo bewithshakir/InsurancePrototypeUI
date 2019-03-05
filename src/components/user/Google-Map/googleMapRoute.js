@@ -5,6 +5,7 @@ import logo from "./../../../assets/images/icons8-sedan-26.png";
 
 let m = -1;
 let iconRotation = 0;
+let googleMap = null;
 
 //static let markersToDeleteArray = []
 
@@ -145,7 +146,6 @@ export function startmap() {
 
 // Using Directions Service find the route between the starting and ending points
 export function setRoutes() {
-  console.log("setRoutes current instance", this);
   let self = this;
   // this.cardataforAnimation = this.cardata.map(item => {
   //   return {
@@ -225,6 +225,7 @@ export function setRoutes() {
       makeRouteCallback.call(this, map, i, directionsDisplay[i]),
       rendererOptions
     );
+    googleMap = this;
   }
 }
 
@@ -235,17 +236,7 @@ export function startAnimation(index) {
     //this.marker.setIcon("../../assets/images/icons8-sedan-26.png");
     clearTimeout(this.timerHandle[index]);
   }
-  //console.log("this.polyLine[index]", this.polyLine[index]);
-  //if (this.polyLine[index]) {
-  // this.eol[index] = this.polyLine[index].Distance();
-  // console.log("this.eol[index]", this.eol[index]);
-  // //map.setCenter(this.polyLine[index].getPath().getAt(0));
 
-  // this.poly2[index] = new window.google.maps.Polyline({
-  //   path: [this.polyLine[index].getPath().getAt(0)],
-  //   strokeColor: "#FFFF00",
-  //   strokeWeight: 3
-  // });
   let self = this;
   //console.log("start animation this", this);
   // this.timerHandle[index] = setTimeout(() => {
@@ -291,9 +282,13 @@ export function resetStartingPosition() {
 
 export function RePositionBySlider(tick) {}
 
-export function getTimeVal(time) {
-  console.log("from google map", time);
-  console.log("m--", m);
+export function getTimeVal(index, curTime) {
+  // console.log("from google map----", this);
+  if (curTime < this.cardataforAnimation.length) {
+    moveCarOnPath(this, index, curTime);
+  }
+
+  // console.log("m--", m);
 }
 //called after getting route from directions service, does all the heavylifting
 function makeRouteCallback(map, routeNum, disp, rendererOptions) {
@@ -393,28 +388,6 @@ function callback(response, status) {
   // }
 }
 
-// function getGeoAddress() {
-//   let geocoder = new window.google.maps.Geocoder();
-//   geocoder.geocode({ location: latlng }, function(results, status) {
-//     if (status === "OK") {
-//       if (results[0]) {
-//         infowindow.setContent(results[0].formatted_address);
-//       } else {
-//         window.alert("No results found");
-//       }
-//     } else {
-//       window.alert("Geocoder failed due to: " + status);
-//     }
-//   });
-// }
-// const removeMarkers = pointToRemove => {
-//   try {
-//     _.each(pointToRemove, key => {
-//       markers[new window.google.maps.LatLng(lat, long)].setMap(null);
-//     });
-//   } catch (e) {}
-// };
-
 // returns the marker
 function createMarker(map, latlng, label, html, icon) {
   var contentString = "<b>" + label + "</b><br>" + html;
@@ -479,79 +452,55 @@ function updatePoly(i, d) {
 }
 
 // updates marker position to make the animation and update the polyline
-function animate(index, d, tick) {
-  //console.log("index, d, tick", index, d, tick);
-  //console.log("Animate This", this);
-  // if (d > this.eol[index]) {
-  //   this.marker[index].setPosition(this.endLocation[index].latlng);
+function animate(index, d, tick, carDataId, gMap) {
+  // if (
+  //   (m >= this.cardataforAnimation.length - 1 || m === null) &&
+  //   this.marker[index]
+  // ) {
+  //   this.marker[index].setPosition(
+  //     this.cardataforAnimation[this.cardataforAnimation.length - 1].location
+  //   );
+  //   console.log(
+  //     "inside iffff",
+  //     index,
+  //     this.cardataforAnimation[this.cardataforAnimation.length - 1].location
+  //   );
+  //   //clearTimeout(this.timerHandle[index]);
+  //   if (this.animateTimeOut) clearTimeout(this.animateTimeOut);
   //   return;
   // }
-  if (
-    (m >= this.cardataforAnimation.length - 1 || m === null) &&
-    this.marker[index]
-  ) {
-    console.log("end position reached at", m);
-    this.marker[index].setPosition(
-      this.cardataforAnimation[this.cardataforAnimation.length - 1].location
-    );
-    //clearTimeout(this.timerHandle[index]);
-    console.log("stop movemnet animateTimeOut", this.animateTimeOut);
-    if (this.animateTimeOut) clearTimeout(this.animateTimeOut);
-    return;
-  }
-  // if (typeof this.d !== "undefined" && this.d > 0 && !this.IsSameRoute) {
-  //   console.log("inside animate", this.d);
-  // } else {
-  //   this.d = d;
-  // }
-
-  // console.log("d", d);
-  //var p = this.polyLine[index].GetPointAtDistance(d);
-  //console.log("p", p.lat(), p.lng());
-
-  /*if (this.marker[index]) {
-    var lastPosn = this.marker[index].getPosition();
-    this.marker[index].setPosition(d);
-    console.log("set position--------------", d.lat(), "|", d.lng());
-    this.currentLatLng = d;
-    let heading = window.google.maps.geometry.spherical.computeHeading(
-      lastPosn,
-      d
-    );
-
-    let distance = window.google.maps.geometry.spherical.computeDistanceBetween(
-      lastPosn,
-      d
-    );
-    // console.log("computeDistanceBetween", distance);
-    this.icon.rotation = heading;
-    this.marker[index].setIcon(this.icon);
-  }*/
-  //console.log("currentPosition",currentPosition);
-  //console.log("this.marker[index]",this.marker[index]);
-  //this.updatePoly(index, d);
-  //this.props.setLatLng(p);
-  //console.log("this.poly2",this.poly2);
   let self = this;
-  // console.log("m+++++++", m);
-  //this.timerHandle[index] =
-  if (this.animateTimeOut) clearTimeout(this.animateTimeOut);
+
+  // if (this.animateTimeOut) clearTimeout(this.animateTimeOut);
 
   m++;
-  this.animateTimeOut = setTimeout(() => {
-    console.log("animate");
-    animate.call(
-      self,
-      index,
-      self.cardataforAnimation[m] ? self.cardataforAnimation[m].location : null
-    );
-  }, tick || 1000);
+  // this.animateTimeOut = setTimeout(() => {
+  //   animate.call(
+  //     self,
+  //     index,
+  //     self.cardataforAnimation[m] ? self.cardataforAnimation[m].location : null
+  //   );
+  //   console.log(
+  //     "last location lng------",
+  //     self.cardataforAnimation[m].location.lng()
+  //   );
+  // }, 1000);
 
-  setMarker(
-    this.marker[index],
-    this.icon,
-    self.cardataforAnimation[m].location
-  );
+  // setMarker(
+  //   this.marker[index],
+  //   this.icon,
+  //   self.cardataforAnimation[m].location
+  // );
+
+  if (carDataId) {
+    setMarker(
+      this.marker[index],
+      this.icon,
+      self.cardataforAnimation[carDataId].location
+    );
+
+    console.log("carDataId------", carDataId);
+  }
 }
 
 function setMarker(marker, icon, TestD) {
@@ -568,53 +517,47 @@ function setMarker(marker, icon, TestD) {
   }
 }
 
-// function animate(index, d, tick) {
-//   //console.log("index, d, tick",index, d, tick);
-//   console.log("Animate This", this);
-//   // if (d > this.eol[index]) {
-//   //   this.marker[index].setPosition(this.endLocation[index].latlng);
-//   //   return;
-//   // }
-//   // if (typeof this.d !== "undefined" && this.d > 0 && !this.IsSameRoute) {
-//   //   console.log("inside animate", this.d);
-//   // } else {
-//   //   this.d = d;
-//   // }
-
-//   // console.log("d", d);
-//   var p = this.polyLine[index].GetPointAtDistance(d);
-//   console.log("p", p.lat(), p.lng());
-
-//   this.latLongArr.push({ latitude: p.lat(), longitude: p.lng() });
-
-//   var lastPosn = this.marker[index].getPosition();
-//   this.marker[index].setPosition(p);
-//   let heading = window.google.maps.geometry.spherical.computeHeading(
-//     lastPosn,
-//     p
-//   );
-
-//   let distance = window.google.maps.geometry.spherical.computeDistanceBetween(
-//     lastPosn,
-//     p
-//   );
-//   // console.log("computeDistanceBetween", distance);
-//   this.icon.rotation = heading;
-//   this.marker[index].setIcon(this.icon);
-//   //console.log("currentPosition",currentPosition);
-//   //console.log("this.marker[index]",this.marker[index]);
-//   this.updatePoly(index, d);
-//   //this.props.setLatLng(p);
-//   //console.log("this.poly2",this.poly2);
-//   let self = this;
-//   this.timerHandle[index] = setTimeout(() => {
-//     animate.call(self, index, d + 1);
-//   }, tick || 500);
-// }
-// calculateTimetotravel() {
-//   this.state.timeToTravel = 10;
-// }
-
-//calculateTimetotravel() {}
+function moveCarOnPath(self, index, curTime) {
+  // start animation
+  // animate.call(self, index, self.cardataforAnimation[0].location);
+  // animate(0, gMap.cardataforAnimation[latLngPos].location, 0, latLngPos);
+  // console.log("playing......", curTime, gMap);
+  if (self) {
+    // index, d, tick, carDataId, self
+    animate.call(
+      self,
+      index,
+      self.cardataforAnimation[curTime].location,
+      0,
+      curTime
+    );
+    // animate(
+    //   0,
+    //   gMap.cardataforAnimation[latLngPos].location,
+    //   0,
+    //   latLngPos,
+    //   gMap
+    // );
+  }
+  // animate(0,)
+  // console.log("moving car", gMap.cardataforAnimation[latLngPos].location.lng());
+  // console.log("latLngPos", latLngPos);
+  // animate.call(
+  //   gMap,
+  //   0,
+  //   gMap.cardataforAnimation[latLngPos]
+  //     ? gMap.cardataforAnimation[latLngPos].location
+  //     : null
+  // );
+  // gMap.animateTimeOut = setTimeout(() => {
+  //   animate.call(
+  //     gMap,
+  //     0,
+  //     gMap.cardataforAnimation[latLngPos]
+  //       ? gMap.cardataforAnimation[latLngPos].location
+  //       : null
+  //   );
+  // }, 1000);
+}
 
 let map = null;

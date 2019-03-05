@@ -49,14 +49,14 @@ class VideoControlBar extends Component {
 
   stopMainPlayerOnBufferCollideVid(mainVid, collideVid) {
     // Stop main player on buffer collide video as seek bar is created with main player
-    if (mainVid && collideVid) {
-      collideVid.on("waiting", e => {
-        mainVid.pause();
-      });
-      collideVid.on("playing", e => {
-        mainVid.play();
-      });
-    }
+    // if (mainVid && collideVid) {
+    //   collideVid.on("waiting", e => {
+    //     mainVid.pause();
+    //   });
+    //   collideVid.on("playing", e => {
+    //     mainVid.play();
+    //   });
+    // }
   }
 
   createInstance(videos) {
@@ -87,7 +87,7 @@ class VideoControlBar extends Component {
     if (vid1) {
       if (vid1.paused()) {
         // Move car on play
-        this.props.startAnimate();
+        // this.props.startAnimate();
         vid1.play();
         vid2 && vid2.play();
         this.elem.style.backgroundImage = `url(${pauseImg})`;
@@ -95,7 +95,7 @@ class VideoControlBar extends Component {
         vid1.pause();
         vid2 && vid2.pause();
         // Stop car on pause
-        this.props.stopAnimate();
+        // this.props.stopAnimate();
 
         this.elem.style.backgroundImage = `url(${playImg})`;
       }
@@ -124,7 +124,6 @@ class VideoControlBar extends Component {
         self.setState({ val: nt });
         // Update time in ui
         this.timeUpdateUI(vid);
-        this.props.getTimeRange(vid.currentTime());
       });
     }
   }
@@ -138,6 +137,28 @@ class VideoControlBar extends Component {
     let cursecs = Math.floor(vid.currentTime() - curmins * 60);
     let durmins = Math.floor(vid.duration() / 60);
     let dursecs = Math.floor(vid.duration() - durmins * 60);
+
+    // Animate car on path when current time change on seekbar
+    this.curTimeInSec = cursecs;
+
+    if (cursecs >= 59) {
+      // if (this.totalTime) {
+      //   console.log("this.totalTime", this.totalTime);
+      //   // this.prevTime = this.totalTime + 1;
+      // }
+      this.prevTime = cursecs + 1;
+    } else {
+      if (this.prevTime) {
+        this.curTimeInSec = this.prevTime + cursecs;
+        this.totalTime = this.curTimeInSec;
+        console.log("this.totalTime", this.totalTime);
+      }
+    }
+    console.log("curTimeInSec", this.curTimeInSec);
+
+    // curTimeInSec = this.prevTime + cursecs;
+
+    this.props.getTimeRange(this.curTimeInSec);
 
     if (cursecs < 10) {
       cursecs = "0" + cursecs;

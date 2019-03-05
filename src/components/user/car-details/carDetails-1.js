@@ -366,7 +366,6 @@ class carDetails1 extends Component {
             "this.googleMapObjList[i].cardata reverse",
             this.googleMapObjList[i].cardata.reverse()
           );
-          debugger;
           console.log("googleMapObjList[i].cardata", this.googleMapObjList);
           this.googleMapObjList[i].cardataforAnimation = this.googleMapObjList[
             i
@@ -395,7 +394,6 @@ class carDetails1 extends Component {
   onStartAnimation() {
     console.log("startAnimation called>>>> with", this);
     _.forEach(this.CarInstancesList, car => {
-      console.log("Current carinstance", car);
       startAnimation.call(car, 0);
     });
   }
@@ -465,7 +463,10 @@ class carDetails1 extends Component {
 
   getTimeRange(time) {
     // console.log("time-----", time);
-    getTimeVal(time);
+    _.forEach(this.CarInstancesList, car => {
+      getTimeVal.call(car, 0, time);
+    });
+    // getTimeVal(time);
   }
   render() {
     let mainIndex;
