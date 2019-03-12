@@ -1,0 +1,14 @@
+.btn {
+  &.small {
+    width: 43px;
+  }
+}
+.search-section {
+  position: relative;
+  .search-item {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+  }
+}

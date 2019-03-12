@@ -1,0 +1,16 @@
+@import "mixins/color-theme";
+
+body.black-theme {
+  @import "themes-variables/black-theme";
+  @include theme($body-bg, $body-color);
+}
+
+body.blue-theme {
+  @import "themes-variables/blue-theme";
+  @include theme($body-bg, $body-color);
+}
+
+// $theme-colors: (
+//   "primary": #f2c419,
+//   "secondary": red
+// );
