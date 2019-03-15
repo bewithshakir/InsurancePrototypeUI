@@ -1,14 +1,7 @@
+@import "./mixins/buttons";
+
 .btn {
-  &.small {
-    width: 43px;
-  }
-}
-.search-section {
-  position: relative;
-  .search-item {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
+  &.btn-extra-lg {
+    @include button-size(15px, 15px, 30px, 30px, 4px);
   }
 }

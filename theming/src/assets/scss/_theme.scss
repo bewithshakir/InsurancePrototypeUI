@@ -1,16 +1,46 @@
 @import "mixins/color-theme";
 
+// Default theme is Black
+// $font-color: #343944;
+// $imgPath: "../images/";
+
+body {
+  @import "themes-variables/black-theme";
+  @include theme($body-bg, $body-color);
+  color: $gray-900;
+  .login-section {
+    background: url($imgUrl+"login-bg-black.png") center center no-repeat;
+    background-size: cover;
+  }
+}
+body.blue-theme {
+  @import "themes-variables/blue-theme";
+  @include theme($body-bg, $body-color);
+  .login-section {
+    background: url($imgUrl+"login-bg-blue.png") center center no-repeat;
+    background-size: cover;
+  }
+
+  .btn-primary {
+    color: #ffffff;
+    background-color: $blue;
+    border-color: $blue;
+    transition: all 0.3s;
+    &:hover {
+      background-color: $blue-hover;
+    }
+  }
+  a,
+  .nav-link {
+    color: $blue;
+  }
+
+  // .btn-primary {
+  //   background-color: $blue;
+  // }
+}
+
 body.black-theme {
   @import "themes-variables/black-theme";
   @include theme($body-bg, $body-color);
 }
-
-body.blue-theme {
-  @import "themes-variables/blue-theme";
-  @include theme($body-bg, $body-color);
-}
-
-// $theme-colors: (
-//   "primary": #f2c419,
-//   "secondary": red
-// );

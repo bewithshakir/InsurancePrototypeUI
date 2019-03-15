@@ -4,30 +4,11 @@ body {
 }
 body {
   margin: 0;
-  font: 16px/1.4 Helvetica;
+  font: 16px/1.4 "Roboto", sans-serif;
 }
-
-// @mixin transform($property) {
-//   -webkit-transform: $property;
-//   -ms-transform: $property;
-//   transform: $property;
-// }
-
-// html {
-//   &.sunrise {
-//     // $accent: #37ccbd;
-//     // $base: #3e4653;
-//     // $flat: #eceef1;
-
-//     // @import "theme";
-//     // @include transform(rotate(30deg));
-//   }
-
-//   &.moonlight {
-//     $accent: #18c;
-//     $base: #2a2a2a;
-//     $flat: #f0f0f0;
-
-//     @import "theme";
-//   }
-// }
+#root {
+  height: 100%;
+}
+.bebas-font {
+  font-family: "bebas_neueregular";
+}

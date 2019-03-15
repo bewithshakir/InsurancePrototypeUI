@@ -1,4 +1,18 @@
-@import "./assets/scss/reset";
+@font-face {
+  font-family: "bebas_neueregular";
+  src: url("./assets/fonts/BebasNeue-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@import "./assets/scss/variables";
+@import "./assets/scss/custom";
 @import "~bootstrap/scss/bootstrap.scss";
 
+@import "./containers/app.scss";
+
 @import "./assets/scss/all-files";
+
+.login-section {
+  // background: url("./assets/images/login-bg-black.png") center center no-repeat;
+  // background: $imgPath;
+}
